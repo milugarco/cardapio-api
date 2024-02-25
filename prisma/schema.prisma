@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Products {
+  id                 Int                  @id @default(autoincrement())
+  groupsId           Int?
+  configId           Int?
+  name               String
+  description        String?
+  value              Decimal
+  group              Groups?              @relation(fields: [groupsId], references: [id])
+  config             ConfigPrinter?       @relation(fields: [configId], references: [id])
+  ProductComplements ProductComplements[]
+  saleProducts       saleProducts[]
+}
+
+model Groups {
+  id      Int        @id @default(autoincrement())
+  name    String
+  Product Products[]
+}
+
+model Complements {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  value              Decimal
+  ProductComplements ProductComplements[]
+}
+
+model ProductComplements {
+  id            Int         @id @default(autoincrement())
+  product       Products    @relation(fields: [productsId], references: [id])
+  complement    Complements @relation(fields: [complementsId], references: [id])
+  productsId    Int
+  complementsId Int
+}
+
+model ConfigPrinter {
+  id       Int        @id @default(autoincrement())
+  name     String
+  print    String
+  Products Products[]
+}
+
+model ConfigTables {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Sales Sales[]
+}
+
+model Sales {
+  id             Int            @id @default(autoincrement())
+  configTablesId Int
+  total          Int
+  alreadyPay     Int?           @default(0)
+  finished       Boolean        @default(false)
+  configTables   ConfigTables   @relation(fields: [configTablesId], references: [id])
+  saleProducts   SaleProducts[]
+}
+
+model SaleProducts {
+  id         Int      @id @default(autoincrement())
+  productsId Int
+  salesId    Int
+  obs        String?
+  value      Int
+  sales      Sales    @relation(fields: [salesId], references: [id])
+  products   Products @relation(fields: [productsId], references: [id])
+}
+
+model SaleProductComplements {
+  id            Int          @id @default(autoincrement())
+  saleProductId Int
+  complementsId Int
+  saleProduct   SaleProducts @relation(fields: [saleProductId], references: [id])
+  complements   Complements @relation(fields: [complementsId], references: [id])
+}
