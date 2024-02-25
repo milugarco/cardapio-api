@@ -20,7 +20,7 @@ model Products {
   group              Groups?              @relation(fields: [groupsId], references: [id])
   config             ConfigPrinter?       @relation(fields: [configId], references: [id])
   ProductComplements ProductComplements[]
-  saleProducts       saleProducts[]
+  saleProducts       SaleProducts[]
 }
 
 model Groups {
@@ -30,10 +30,11 @@ model Groups {
 }
 
 model Complements {
-  id                 Int                  @id @default(autoincrement())
-  name               String
-  value              Decimal
-  ProductComplements ProductComplements[]
+  id                     Int                      @id @default(autoincrement())
+  name                   String
+  value                  Decimal
+  ProductComplements     ProductComplements[]
+  SaleProductComplements SaleProductComplements[]
 }
 
 model ProductComplements {
@@ -68,13 +69,14 @@ model Sales {
 }
 
 model SaleProducts {
-  id         Int      @id @default(autoincrement())
-  productsId Int
-  salesId    Int
-  obs        String?
-  value      Int
-  sales      Sales    @relation(fields: [salesId], references: [id])
-  products   Products @relation(fields: [productsId], references: [id])
+  id                     Int                      @id @default(autoincrement())
+  productsId             Int
+  salesId                Int
+  obs                    String?
+  value                  Int
+  sales                  Sales                    @relation(fields: [salesId], references: [id])
+  products               Products                 @relation(fields: [productsId], references: [id])
+  SaleProductComplements SaleProductComplements[]
 }
 
 model SaleProductComplements {
@@ -82,5 +84,5 @@ model SaleProductComplements {
   saleProductId Int
   complementsId Int
   saleProduct   SaleProducts @relation(fields: [saleProductId], references: [id])
-  complements   Complements @relation(fields: [complementsId], references: [id])
+  complements   Complements  @relation(fields: [complementsId], references: [id])
 }
