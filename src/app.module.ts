@@ -7,9 +7,10 @@ import { ProductComplementsModule } from './modules/product-module/complement-pr
 import { ConfigPrinterModule } from './modules/config-module/config-printers/config-printer.module';
 import { GroupService } from './modules/product-module/groups/group.service';
 import { ConfigPrinterService } from './modules/config-module/config-printers/config-printer.service';
+import { ConfigTableModule } from './modules/config-module/config-tables/config-tables.module';
 
 @Module({
-  imports: [ProductModule, GroupModule, ComplementModule, ProductComplementsModule, ConfigPrinterModule],
+  imports: [ProductModule, GroupModule, ComplementModule, ProductComplementsModule, ConfigPrinterModule, ConfigTableModule],
   controllers: [],
   providers: [PrismaService],
 })

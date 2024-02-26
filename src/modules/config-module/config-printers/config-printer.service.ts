@@ -15,7 +15,7 @@ export class ConfigPrinterService {
     try {
       const { print, name } = createConfigPrinterDto;
 
-      const configPrinter = await this.model.config.create({
+      const configPrinter = await this.model.configPrinter.create({
         data: {
           print: print,
           name: name,
@@ -31,7 +31,7 @@ export class ConfigPrinterService {
 
   async findAll(print?: string, name?: string, page?: number, perPage?: number): Promise<ConfigPrintersResponse> {
     try {
-      const where: Prisma.ConfigWhereInput = {};
+      const where: Prisma.ConfigPrinterWhereInput = {};
 
       if (print) {
         where.print = print;
@@ -41,9 +41,9 @@ export class ConfigPrinterService {
         where.name = name;
       }
 
-      const totalCount: number = await this.model.config.count({ where: where });
+      const totalCount: number = await this.model.configPrinter.count({ where: where });
 
-      const configPrinters = await this.model.config.findMany({
+      const configPrinters = await this.model.configPrinter.findMany({
         where: where,
         include: {
           Products: true
@@ -68,7 +68,7 @@ export class ConfigPrinterService {
 
   async findOne(id: number): Promise<ConfigPrinterResponse> {
    try {
-    const config = await this.model.config.findUnique({
+    const config = await this.model.configPrinter.findUnique({
       where: {
         id: Number(id),
       },
@@ -94,7 +94,7 @@ export class ConfigPrinterService {
         throw new NotFoundException(`Config printer not found`);
       }
 
-      const configPrinterUpdate = await this.model.config.update({
+      const configPrinterUpdate = await this.model.configPrinter.update({
         where: { id: Number(id) },
         data: {
           print: print ? print : configPrinterExist.print,
