@@ -7,6 +7,11 @@ import { ConfigPrinterService } from 'src/modules/config-module/config-printers/
 
 @Module({
   controllers: [ProductController],
-  providers: [PrismaService, ProductService, GroupService, ConfigPrinterService],
+  providers: [
+    PrismaService,
+    ProductService,
+    GroupService,
+    ConfigPrinterService,
+  ],
 })
 export class ProductModule {}

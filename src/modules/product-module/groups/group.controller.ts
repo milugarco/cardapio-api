@@ -1,9 +1,28 @@
-import { Body, ConflictException, Controller, Get, NotFoundException, Param, Patch, Post, Query } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { GroupService } from "./group.service";
-import { GroupResponse, GroupsResponse } from "./dto/get-group.dto";
-import { CreateGroupDto } from "./dto/create-group.dto";
-import { UpdateGroupDto } from "./dto/update-group.dto";
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { GroupService } from './group.service';
+import { GroupResponse, GroupsResponse } from './dto/get-group.dto';
+import { CreateGroupDto } from './dto/create-group.dto';
+import { UpdateGroupDto } from './dto/update-group.dto';
 
 @ApiTags('Groups')
 @Controller('group')
@@ -20,9 +39,7 @@ export class GroupController {
   @ApiInternalServerErrorResponse({
     description: 'Internal Server Error response',
   })
-  async create(
-    @Body() createGroupDto: CreateGroupDto,
-  ): Promise<GroupResponse> {
+  async create(@Body() createGroupDto: CreateGroupDto): Promise<GroupResponse> {
     try {
       return this.groupService.create(createGroupDto);
     } catch (error) {
@@ -47,11 +64,7 @@ export class GroupController {
     @Query('perPage') perPage = 10,
   ): Promise<GroupsResponse> {
     try {
-      const response = await this.groupService.findAll(
-        name,
-        page,
-        perPage,
-      );
+      const response = await this.groupService.findAll(name, page, perPage);
       return response;
     } catch (error) {
       console.error(error);

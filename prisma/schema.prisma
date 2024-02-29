@@ -74,6 +74,7 @@ model SaleProducts {
   salesId                Int
   obs                    String?
   value                  Int
+  isPrint                Boolean                  @default(false)
   sales                  Sales                    @relation(fields: [salesId], references: [id])
   products               Products                 @relation(fields: [productsId], references: [id])
   SaleProductComplements SaleProductComplements[]

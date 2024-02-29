@@ -14,7 +14,11 @@ import { ConfigPrinterService } from 'src/modules/config-module/config-printers/
 
 @Injectable()
 export class ProductService {
-  constructor(private model: PrismaService, private groupService: GroupService, private configPrinterService: ConfigPrinterService) {}
+  constructor(
+    private model: PrismaService,
+    private groupService: GroupService,
+    private configPrinterService: ConfigPrinterService,
+  ) {}
 
   async create(createProductDto: CreateProductDto): Promise<ProductResponse> {
     try {
@@ -24,13 +28,15 @@ export class ProductService {
         throw new Error(`Invalid value for product`);
       }
 
-      const groupExist = await this.groupService.findOne(Number(groupsId))
+      const groupExist = await this.groupService.findOne(Number(groupsId));
 
       if (!groupExist) {
         throw new NotFoundException('Group not exist');
       }
 
-      const configPrinterExist = await this.configPrinterService.findOne(Number(configId))
+      const configPrinterExist = await this.configPrinterService.findOne(
+        Number(configId),
+      );
 
       if (!configPrinterExist) {
         throw new NotFoundException('Config printer not exist');
@@ -91,14 +97,14 @@ export class ProductService {
           ProductComplements: {
             include: {
               complement: {
-                select:  {
+                select: {
                   id: true,
                   name: true,
                   value: true,
-                }
-              }
-            }
-          }
+                },
+              },
+            },
+          },
         },
         skip: (page - 1) * perPage,
         take: Number(perPage),
@@ -134,14 +140,14 @@ export class ProductService {
           ProductComplements: {
             include: {
               complement: {
-                select:  {
+                select: {
                   id: true,
                   name: true,
                   value: true,
-                }
-              }
-            }
-          }
+                },
+              },
+            },
+          },
         },
       });
 

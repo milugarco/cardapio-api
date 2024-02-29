@@ -1,6 +1,13 @@
-import { Body, ConflictException, Controller, Get, NotFoundException, Param, Patch, Post, Query } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { ConfigTableService } from "./config-tables.service";
+import { ConflictException, Controller, Post, Query } from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ConfigTableService } from './config-tables.service';
 
 @ApiTags('Config Tables')
 @Controller('config')
@@ -10,17 +17,17 @@ export class ConfigTablesController {
   @Post('v1/config-tables')
   @ApiOperation({ summary: 'Create a tables' })
   @ApiCreatedResponse({
-    description: 'The record has been successfully created.'
+    description: 'The record has been successfully created.',
   })
   @ApiBadRequestResponse({ description: 'bad request' })
   @ApiInternalServerErrorResponse({
     description: 'Internal Server Error response',
   })
-  @ApiQuery({ name: 'qtd', required: false, example: '20'})
-  async create(@Query('qtd') qtd?: number, ): Promise<string> {
+  @ApiQuery({ name: 'qtd', required: false, example: '20' })
+  async create(@Query('qtd') qtd?: number): Promise<string> {
     try {
-      return await this.configTableService.create(qtd)
-    } catch(error) {
+      return await this.configTableService.create(qtd);
+    } catch (error) {
       console.log(`Error creating Config tables: ${error}`);
       throw new ConflictException(`Error creating Config tables: ${error}`);
     }

@@ -1,14 +1,35 @@
-import { Body, ConflictException, Controller, Get, NotFoundException, Param, Patch, Post, Query } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
-import {ComplementService} from "./complement.service"
-import { ComplementResponse, ComplementsResponse } from "./dto/get-complement.dto";
-import { CreateComplementDto } from "./dto/create-complement.dto";
-import { Decimal } from "@prisma/client/runtime/library";
-import { UpdateComplementDto } from "./dto/update-complemente.dto";
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ComplementService } from './complement.service';
+import {
+  ComplementResponse,
+  ComplementsResponse,
+} from './dto/get-complement.dto';
+import { CreateComplementDto } from './dto/create-complement.dto';
+import { UpdateComplementDto } from './dto/update-complemente.dto';
 @ApiTags('Complements')
 @Controller('complements')
-export class ComplementController{
-    constructor(private complementService: ComplementService) {}
+export class ComplementController {
+  constructor(private complementService: ComplementService) {}
 
   @Post('v1/complement')
   @ApiOperation({ summary: 'Create a new complement' })
@@ -39,7 +60,7 @@ export class ComplementController{
     description: 'Internal Server Error response',
   })
   @ApiQuery({ name: 'name', required: false, example: 'queijo' })
-  @ApiQuery({name: 'value', required: false, example: 1})
+  @ApiQuery({ name: 'value', required: false, example: 1 })
   @ApiQuery({ name: 'page', required: false, example: 1 })
   @ApiQuery({ name: 'perPage', required: false, example: 10 })
   async findAll(

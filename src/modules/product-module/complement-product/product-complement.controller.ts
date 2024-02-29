@@ -1,10 +1,35 @@
-import { Body, ConflictException, Controller, Get, NotFoundException, Param, Patch, Post, Query } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { ProductComplementService } from "./product-complement.service";
-import { ProductComplementResponse, ProductComplementsResponse } from "./dto/get-product-complement.dto";
-import { ComplementResponse } from "../complements/dto/get-complement.dto";
-import { CreateProductComplementDto, CreateProductComplementsDto } from "./dto/create-product-complement.dto";
-import { UpdateProductComplementDto } from "./dto/update-product-complement.dto";
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ProductComplementService } from './product-complement.service';
+import {
+  ProductComplementResponse,
+  ProductComplementsResponse,
+} from './dto/get-product-complement.dto';
+import { ComplementResponse } from '../complements/dto/get-complement.dto';
+import {
+  CreateProductComplementDto,
+  CreateProductComplementsDto,
+} from './dto/create-product-complement.dto';
+import { UpdateProductComplementDto } from './dto/update-product-complement.dto';
 
 @ApiTags('Product Complements')
 @Controller('product-complements')
@@ -33,7 +58,9 @@ export class ProductComplementsController {
   }
 
   @Post('v1/product-complements/all')
-  @ApiOperation({ summary: 'Create a new product with have varios complements' })
+  @ApiOperation({
+    summary: 'Create a new product with have varios complements',
+  })
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: [ProductComplementResponse],
@@ -46,7 +73,9 @@ export class ProductComplementsController {
     @Body() createProductComplementsDto: CreateProductComplementsDto,
   ): Promise<ProductComplementResponse[]> {
     try {
-      return this.productComplementsService.createMany(createProductComplementsDto);
+      return this.productComplementsService.createMany(
+        createProductComplementsDto,
+      );
     } catch (error) {
       console.log(`Error creating Complement: ${error}`);
       throw new ConflictException(`Error creating Complement: ${error}`);
@@ -61,7 +90,7 @@ export class ProductComplementsController {
     description: 'Internal Server Error response',
   })
   @ApiQuery({ name: 'productId', required: false, example: 1 })
-  @ApiQuery({name: 'complementId', required: false, example: 1})
+  @ApiQuery({ name: 'complementId', required: false, example: 1 })
   @ApiQuery({ name: 'page', required: false, example: 1 })
   @ApiQuery({ name: 'perPage', required: false, example: 10 })
   async findAll(
@@ -123,7 +152,10 @@ export class ProductComplementsController {
     @Body() updateProductComplementDto: UpdateProductComplementDto,
   ): Promise<ProductComplementResponse> {
     try {
-      const response = await this.productComplementsService.update(id, updateProductComplementDto);
+      const response = await this.productComplementsService.update(
+        id,
+        updateProductComplementDto,
+      );
       return response;
     } catch (error) {
       console.error(error);

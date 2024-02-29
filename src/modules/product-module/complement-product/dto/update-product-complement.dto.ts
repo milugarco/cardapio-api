@@ -1,9 +1,9 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateProductComplementDto{
-    @ApiProperty({
-         description: "Id do complemento",
-        example: 1,
-    })
-    complementId: number;
+export class UpdateProductComplementDto {
+  @ApiProperty({
+    description: 'Id do complemento',
+    example: 1,
+  })
+  complementId: number;
 }

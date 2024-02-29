@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { ProductResponse } from "src/modules/product-module/products/dto/get-product.dto";
+import { ApiProperty } from '@nestjs/swagger';
+import { ProductResponse } from 'src/modules/product-module/products/dto/get-product.dto';
 
 export class ResponseConfigPrinterDto {
   @ApiProperty({
@@ -21,7 +21,7 @@ export class ResponseConfigPrinterDto {
   name: string;
 
   @ApiProperty({
-    type: () => [ProductResponse]
+    type: () => [ProductResponse],
   })
   Products: ProductResponse[];
 }

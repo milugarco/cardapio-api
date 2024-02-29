@@ -1,6 +1,6 @@
-import { ApiProperty, PartialType } from "@nestjs/swagger";
-import { PageInfo } from "src/utils/pageInfo";
-import { ResponseGroupDto } from "./response-group.dto";
+import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { PageInfo } from 'src/utils/pageInfo';
+import { ResponseGroupDto } from './response-group.dto';
 
 export class GroupsResponse {
   @ApiProperty({ type: () => [ResponseGroupDto] })

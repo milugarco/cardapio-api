@@ -23,7 +23,6 @@ import { ProductService } from './product.service';
 import { ProductResponse, ProductsResponse } from './dto/get-product.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UPdateProductDto } from './dto/update-product.dto';
-import { Decimal } from '@prisma/client/runtime/library';
 
 @ApiTags('Product')
 @Controller('product')
@@ -69,7 +68,7 @@ export class ProductController {
     @Query('perPage') perPage = 10,
     @Query('groupsId') groupsId?: number,
     @Query('value') value?: number,
-  )/* : Promise<ProductsResponse>  */{
+  ): Promise<ProductsResponse> {
     try {
       const response = await this.productService.findAll(
         name,

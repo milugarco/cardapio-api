@@ -1,6 +1,6 @@
-import { ApiProperty, PartialType } from "@nestjs/swagger";
-import { PageInfo } from "src/utils/pageInfo";
-import { ResponseConfigPrinterDto } from "./response-config-printer.dto";
+import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { PageInfo } from 'src/utils/pageInfo';
+import { ResponseConfigPrinterDto } from './response-config-printer.dto';
 
 export class ConfigPrintersResponse {
   @ApiProperty({ type: () => [ResponseConfigPrinterDto] })
@@ -10,4 +10,6 @@ export class ConfigPrintersResponse {
   pageInfo?: PageInfo;
 }
 
-export class ConfigPrinterResponse extends PartialType(ResponseConfigPrinterDto) {}
+export class ConfigPrinterResponse extends PartialType(
+  ResponseConfigPrinterDto,
+) {}

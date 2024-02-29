@@ -1,10 +1,14 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "src/services/prisma.service";
-import { CreateGroupDto } from "./dto/create-group.dto";
-import { GroupResponse, GroupsResponse } from "./dto/get-group.dto";
-import { Prisma } from "@prisma/client";
-import { getPageInfo } from "src/utils/pageInfo";
-import { UpdateGroupDto } from "./dto/update-group.dto";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { PrismaService } from 'src/services/prisma.service';
+import { CreateGroupDto } from './dto/create-group.dto';
+import { GroupResponse, GroupsResponse } from './dto/get-group.dto';
+import { Prisma } from '@prisma/client';
+import { getPageInfo } from 'src/utils/pageInfo';
+import { UpdateGroupDto } from './dto/update-group.dto';
 
 @Injectable()
 export class GroupService {
@@ -72,7 +76,7 @@ export class GroupService {
         where: {
           id: Number(id),
         },
-         include: {
+        include: {
           Product: true,
         },
       });

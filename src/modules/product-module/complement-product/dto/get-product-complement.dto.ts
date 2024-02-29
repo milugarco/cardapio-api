@@ -1,6 +1,6 @@
-import { ApiProperty, PartialType } from "@nestjs/swagger";
-import { ReponseProductComplementDto } from "./response-product-complement.dto";
-import { PageInfo } from "src/utils/pageInfo";
+import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ReponseProductComplementDto } from './response-product-complement.dto';
+import { PageInfo } from 'src/utils/pageInfo';
 
 export class ProductComplementsResponse {
   @ApiProperty({ type: () => [ReponseProductComplementDto] })
@@ -10,4 +10,6 @@ export class ProductComplementsResponse {
   pageInfo?: PageInfo;
 }
 
-export class ProductComplementResponse extends PartialType(ReponseProductComplementDto) {}
+export class ProductComplementResponse extends PartialType(
+  ReponseProductComplementDto,
+) {}

@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ProductResponse } from '../../products/dto/get-product.dto';
 
 export class ResponseGroupDto {
-   @ApiProperty({
+  @ApiProperty({
     example: 1,
     description: 'Id do produto',
   })
@@ -15,7 +15,7 @@ export class ResponseGroupDto {
   name: string;
 
   @ApiProperty({
-    type: () => [ProductResponse]
+    type: () => [ProductResponse],
   })
   Product: ProductResponse[];
 }

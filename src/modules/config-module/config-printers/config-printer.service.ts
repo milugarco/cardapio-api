@@ -1,17 +1,26 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "src/services/prisma.service";
-import { ConfigPrinterResponse, ConfigPrintersResponse } from "./dto/get-config-printer.dto";
-import { CreateConfigPrinterDto } from "./dto/create-config-printer.dto";
-import { Prisma } from "@prisma/client";
-import { getPageInfo } from "src/utils/pageInfo";
-import { UpdateConfigPrinterDto } from "./dto/update-config-printer.dto";
-import { exec } from "child_process";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { PrismaService } from 'src/services/prisma.service';
+import {
+  ConfigPrinterResponse,
+  ConfigPrintersResponse,
+} from './dto/get-config-printer.dto';
+import { CreateConfigPrinterDto } from './dto/create-config-printer.dto';
+import { Prisma } from '@prisma/client';
+import { getPageInfo } from 'src/utils/pageInfo';
+import { UpdateConfigPrinterDto } from './dto/update-config-printer.dto';
+import { exec } from 'child_process';
 
 @Injectable()
 export class ConfigPrinterService {
   constructor(private model: PrismaService) {}
 
-  async create(createConfigPrinterDto: CreateConfigPrinterDto): Promise<ConfigPrinterResponse> {
+  async create(
+    createConfigPrinterDto: CreateConfigPrinterDto,
+  ): Promise<ConfigPrinterResponse> {
     try {
       const { print, name } = createConfigPrinterDto;
 
@@ -29,7 +38,12 @@ export class ConfigPrinterService {
     }
   }
 
-  async findAll(print?: string, name?: string, page?: number, perPage?: number): Promise<ConfigPrintersResponse> {
+  async findAll(
+    print?: string,
+    name?: string,
+    page?: number,
+    perPage?: number,
+  ): Promise<ConfigPrintersResponse> {
     try {
       const where: Prisma.ConfigPrinterWhereInput = {};
 
@@ -41,12 +55,14 @@ export class ConfigPrinterService {
         where.name = name;
       }
 
-      const totalCount: number = await this.model.configPrinter.count({ where: where });
+      const totalCount: number = await this.model.configPrinter.count({
+        where: where,
+      });
 
       const configPrinters = await this.model.configPrinter.findMany({
         where: where,
         include: {
-          Products: true
+          Products: true,
         },
         skip: (page - 1) * perPage,
         take: Number(perPage),
@@ -57,7 +73,7 @@ export class ConfigPrinterService {
       const response: ConfigPrintersResponse = {
         data: configPrinters,
         pageInfo: pageInfo,
-      }
+      };
 
       return response;
     } catch (error) {
@@ -67,24 +83,27 @@ export class ConfigPrinterService {
   }
 
   async findOne(id: number): Promise<ConfigPrinterResponse> {
-   try {
-    const config = await this.model.configPrinter.findUnique({
-      where: {
-        id: Number(id),
-      },
-      include: {
-        Products: true
-      },
-    });
+    try {
+      const config = await this.model.configPrinter.findUnique({
+        where: {
+          id: Number(id),
+        },
+        include: {
+          Products: true,
+        },
+      });
 
-    return config;
-   } catch (error) {
-    console.log(`Error finding config: ${error}`);
-    throw new NotFoundException(`Error finding config: ${error}`);
-   }
+      return config;
+    } catch (error) {
+      console.log(`Error finding config: ${error}`);
+      throw new NotFoundException(`Error finding config: ${error}`);
+    }
   }
 
-  async update(id: number, updateConfigPrinterDto: UpdateConfigPrinterDto): Promise<ConfigPrinterResponse> {
+  async update(
+    id: number,
+    updateConfigPrinterDto: UpdateConfigPrinterDto,
+  ): Promise<ConfigPrinterResponse> {
     try {
       const { print, name } = updateConfigPrinterDto;
 
@@ -100,7 +119,7 @@ export class ConfigPrinterService {
           print: print ? print : configPrinterExist.print,
           name: name ? name : configPrinterExist.name,
         },
-      })
+      });
 
       return configPrinterUpdate;
     } catch (error) {
