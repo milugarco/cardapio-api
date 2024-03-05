@@ -49,6 +49,10 @@ export class SaleService {
         },
       });
 
+      saleProducts.map(async (saleProduct) => {
+        await this.saleProductService.create(sale.id, saleProduct);
+      });
+
       return sale;
     } catch (error) {
       console.log(`Error creating Sale: ${error}`);
