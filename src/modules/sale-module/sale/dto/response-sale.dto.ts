@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ResponseConfigTablesDto } from 'src/modules/config-module/config-tables/dto/response-tables.dto';
+import { SaleProductResponse } from '../../sale-products/dto/get-sales-products.dto';
 
 export class ResponseSaleDto {
   @ApiProperty({ type: Number })
@@ -21,4 +22,9 @@ export class ResponseSaleDto {
     type: () => ResponseConfigTablesDto,
   })
   configTables?: ResponseConfigTablesDto;
+
+  @ApiProperty({
+    type: () => [SaleProductResponse],
+  })
+  saleProducts?: SaleProductResponse[];
 }

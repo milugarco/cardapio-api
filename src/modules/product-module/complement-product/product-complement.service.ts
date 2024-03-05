@@ -16,7 +16,6 @@ import {
 } from './dto/create-product-complement.dto';
 import { Prisma } from '@prisma/client';
 import { getPageInfo } from 'src/utils/pageInfo';
-import { ReponseProductComplementDto } from './dto/response-product-complement.dto';
 import { UpdateProductComplementDto } from './dto/update-product-complement.dto';
 
 @Injectable()

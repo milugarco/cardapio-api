@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty } from 'class-validator';
+import { CreateSaleProductDto } from '../../sale-products/dto/create-sale-products.dto';
 
 export class CreateSaleDto {
   @ApiProperty({ type: Number })
@@ -12,9 +13,6 @@ export class CreateSaleDto {
   @IsNotEmpty()
   total: number;
 
-  /*  @ApiProperty({ type: [CreateSaleProductDto] })
-  @IsNotEmpty()
-  @ValidateNested({ each: true })
-  @Type(() => CreateSaleProductDto)
-  saleProducts: CreateSaleProductDto[]; */
+  @ApiProperty({ type: [CreateSaleProductDto] })
+  saleProducts: CreateSaleProductDto[];
 }

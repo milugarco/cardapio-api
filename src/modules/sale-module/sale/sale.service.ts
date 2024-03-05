@@ -9,14 +9,18 @@ import { CreateSaleDto } from './dto/create-sale.dto';
 import { Prisma } from '@prisma/client';
 import { getPageInfo } from 'src/utils/pageInfo';
 import { UpdateSaleDto } from './dto/update-sale.dto';
+import { SaleProductService } from '../sale-products/sale-product.service';
 
 @Injectable()
 export class SaleService {
-  constructor(private model: PrismaService) {}
+  constructor(
+    private model: PrismaService,
+    private saleProductService: SaleProductService,
+  ) {}
 
   async create(createSaleDto: CreateSaleDto): Promise<SaleResponse> {
     try {
-      const { configTablesId, total } = createSaleDto;
+      const { configTablesId, total, saleProducts } = createSaleDto;
 
       const tableIsUsed = this.model.sales.findFirst({
         where: {
@@ -35,6 +39,13 @@ export class SaleService {
           total: total,
           alreadyPay: 0,
           finished: false,
+        },
+        include: {
+          saleProducts: {
+            include: {
+              SaleProductComplements: true,
+            },
+          },
         },
       });
 
