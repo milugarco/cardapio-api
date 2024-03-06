@@ -6,6 +6,8 @@ import { ComplementModule } from './modules/product-module/complements/complemen
 import { ProductComplementsModule } from './modules/product-module/complement-product/product-complement.module';
 import { ConfigPrinterModule } from './modules/config-module/config-printers/config-printer.module';
 import { ConfigTableModule } from './modules/config-module/config-tables/config-tables.module';
+import { SaleModule } from './modules/sale-module/sale/sale.module';
+import { SaleProductModule } from './modules/sale-module/sale-products/sale-product.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { ConfigTableModule } from './modules/config-module/config-tables/config-
     ProductComplementsModule,
     ConfigPrinterModule,
     ConfigTableModule,
+    SaleModule,
+    SaleProductModule,
   ],
   controllers: [],
   providers: [PrismaService],

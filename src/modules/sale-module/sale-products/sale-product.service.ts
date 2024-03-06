@@ -1,9 +1,14 @@
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma.service';
-import { CreateSaleProductDto } from './dto/create-sale-products.dto';
 import { SaleProductResponse } from './dto/get-sales-products.dto';
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import { CreateSaleProductDto } from './dto/create-sale-products.dto';
 import { SaleProductComplementService } from '../sale-product-complements/sale-product-complement.service';
 
+@Injectable()
 export class SaleProductService {
   constructor(
     private model: PrismaService,
@@ -11,8 +16,8 @@ export class SaleProductService {
   ) {}
 
   async create(
-    saleId: number,
-    createSaleProductDto: CreateSaleProductDto,
+    saleId?: number,
+    createSaleProductDto?: CreateSaleProductDto,
   ): Promise<SaleProductResponse> {
     try {
       const { productId, obs, createSaleProductComplementsDto } =
@@ -48,10 +53,10 @@ export class SaleProductService {
         },
       });
 
-      await this.saleProductComplementService.create(
-        saleId,
-        createSaleProductComplementsDto,
-      );
+      await this.saleProductComplementService.create(saleId, {
+        saleProductId: product.id,
+        complementsId: createSaleProductComplementsDto.complementsId,
+      });
 
       return product;
     } catch (error) {

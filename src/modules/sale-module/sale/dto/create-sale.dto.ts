@@ -8,11 +8,6 @@ export class CreateSaleDto {
   @IsNotEmpty()
   configTablesId: number;
 
-  @ApiProperty({ type: Number })
-  @IsInt()
-  @IsNotEmpty()
-  total: number;
-
   @ApiProperty({ type: [CreateSaleProductDto] })
   saleProducts: CreateSaleProductDto[];
 }

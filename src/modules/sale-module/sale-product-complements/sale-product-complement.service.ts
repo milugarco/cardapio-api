@@ -1,8 +1,13 @@
 import { PrismaService } from 'src/services/prisma.service';
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateSaleProductComplementsDto } from './dto/create-sale-product-complements.dto';
 import { SaleProductComplementResponse } from './dto/get-sales-product-complements.dto';
 
+@Injectable()
 export class SaleProductComplementService {
   constructor(private model: PrismaService) {}
 
@@ -28,6 +33,8 @@ export class SaleProductComplementService {
           id: Number(saleProductId),
         },
       });
+
+      console.log('AQUI', saleProductExists);
 
       if (!saleProductExists) {
         throw new NotFoundException('Sale product not found');

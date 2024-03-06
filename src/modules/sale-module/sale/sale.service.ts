@@ -20,9 +20,9 @@ export class SaleService {
 
   async create(createSaleDto: CreateSaleDto): Promise<SaleResponse> {
     try {
-      const { configTablesId, total, saleProducts } = createSaleDto;
+      const { configTablesId, saleProducts } = createSaleDto;
 
-      const tableIsUsed = this.model.sales.findFirst({
+      const tableIsUsed = await this.model.sales.findFirst({
         where: {
           configTablesId: configTablesId,
           finished: false,
@@ -33,6 +33,40 @@ export class SaleService {
         throw new ConflictException('Table is already used');
       }
 
+      let prodTotal = 0;
+      let complementTotal = 0;
+
+      for (const saleProduct of saleProducts) {
+        const prod = await this.model.products.findFirst({
+          where: {
+            id: saleProduct.productId,
+          },
+        });
+
+        if (prod) {
+          prodTotal += Number(prod.value);
+        }
+
+        const complementsId =
+          saleProduct.createSaleProductComplementsDto?.complementsId;
+
+        if (complementsId && complementsId.length > 0) {
+          for (const complementId of complementsId) {
+            const comple = await this.model.complements.findFirst({
+              where: {
+                id: complementId,
+              },
+            });
+
+            if (comple) {
+              complementTotal += Number(comple.value);
+            }
+          }
+        }
+      }
+
+      const total = prodTotal + complementTotal;
+
       const sale = await this.model.sales.create({
         data: {
           configTablesId: configTablesId,
@@ -40,20 +74,15 @@ export class SaleService {
           alreadyPay: 0,
           finished: false,
         },
-        include: {
-          saleProducts: {
-            include: {
-              SaleProductComplements: true,
-            },
-          },
-        },
       });
 
-      saleProducts.map(async (saleProduct) => {
+      for (const saleProduct of saleProducts) {
         await this.saleProductService.create(sale.id, saleProduct);
-      });
+      }
 
-      return sale;
+      const saleFinished = await this.findOne(sale.id);
+
+      return saleFinished;
     } catch (error) {
       console.log(`Error creating Sale: ${error}`);
       throw new ConflictException(`Error creating Sale: ${error}`);
@@ -69,7 +98,11 @@ export class SaleService {
         include: {
           saleProducts: {
             include: {
-              SaleProductComplements: true,
+              SaleProductComplements: {
+                include: {
+                  complements: true,
+                },
+              },
             },
           },
           configTables: true,
