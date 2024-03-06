@@ -93,7 +93,7 @@ export class SaleService {
     try {
       const sale = await this.model.sales.findUnique({
         where: {
-          id: id,
+          id: Number(id),
         },
         include: {
           saleProducts: {
@@ -173,7 +173,7 @@ export class SaleService {
 
       const updatedSale = await this.model.sales.update({
         where: {
-          id: id,
+          id: Number(id),
         },
         data: {
           configTablesId: configTablesId
@@ -215,7 +215,7 @@ export class SaleService {
 
       const updatedSale = await this.model.sales.update({
         where: {
-          id: id,
+          id: Number(id),
         },
         data: {
           finished: true,
